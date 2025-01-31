@@ -1,12 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/auth.controller");
+const authRouter = require("./auth.routes");
 
 // Authentication routes
-router.post("/checkToken", authController.checkToken);
-router.post("/register", authController.registerUser);
-router.post("/login", authController.loginUser);
-router.post("/googleSignIn", authController.googleSignIn);
-router.post("/githubSignIn", authController.githubSignIn);
+// Root route
+router.get("/health-check", (req, res) => {
+    res.send("App is up and running");
+});
+
+
+
+router.use("/auth", authRouter);
 
 module.exports = router;
