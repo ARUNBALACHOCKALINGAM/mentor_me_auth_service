@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema({
   highestQualification: { type: String, default: "" },
   university: { type: String, default: "" },
   cgpa: { type: String, default: "" },
-  linkedIn: { type: String, default: "" },
+  linkedin: { type: String, default: "" },
   github: { type: String, default: "" },
   leetcode: { type: String, default: "" },
   codechef: { type: String, default: "" },
@@ -17,7 +17,9 @@ const UserSchema = new mongoose.Schema({
   company: { type: String, default: "" },
   role: { type: String, default: "" },
   track: { type: String, default: "" },
-  avatar: { type: String, default: "" }, // URL or base64 string
+  avatar: { type: String, default: "" },
+  matchedUser: { type: mongoose.Schema.Types.ObjectId, ref: "user", default: null }, 
+  likedUsers: {type:[String],default:[]}// URL or base64 string
 }, {
   timestamps: true, // Automatically add createdAt and updatedAt fields
 });

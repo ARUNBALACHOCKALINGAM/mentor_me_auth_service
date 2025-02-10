@@ -47,13 +47,13 @@ exports.checkToken = async (req, res) => {
 // ✅ Register new user (Email & Password)
 exports.registerUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password , usertype} = req.body;
 
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: "User already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    user = new User({ email, password: hashedPassword });
+    user = new User({ email, password: hashedPassword,userType:usertype });
     await user.save();
 
     const token = generateToken(user._id);
@@ -69,6 +69,7 @@ exports.registerUser = async (req, res) => {
     res.status(200).json({
       id: user._id,
       email: user.email,
+      userType:user.userType,
       message: "User registered successfully!"
     });
   } catch (error) {
@@ -79,8 +80,8 @@ exports.registerUser = async (req, res) => {
 // ✅ Login existing user (Email & Password)
 exports.loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const { email, password,userType } = req.body;
+    const user = await User.findOne({ email,userType:userType });
 
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -100,6 +101,7 @@ exports.loginUser = async (req, res) => {
     res.status(200).json({
       id: user._id,
       email: user.email,
+      userType: user.userType,
       message: "User logged in successfully!"
     });
   } catch (error) {
