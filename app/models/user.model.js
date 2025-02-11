@@ -19,7 +19,8 @@ const UserSchema = new mongoose.Schema({
   track: { type: String, default: "" },
   avatar: { type: String, default: "" },
   matchedUser: { type: mongoose.Schema.Types.ObjectId, ref: "user", default: null }, 
-  likedUsers: {type:[String],default:[]}// URL or base64 string
+  likedUsers: {type:[String],default:[]},
+  currentLevel: {type:String,default:"Level 1",ref:"Level"}// URL or base64 string
 }, {
   timestamps: true, // Automatically add createdAt and updatedAt fields
 });

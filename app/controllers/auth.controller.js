@@ -60,11 +60,12 @@ exports.registerUser = async (req, res) => {
 
     // Set token in HttpOnly cookie
     res.cookie("token", token, {
-      httpOnly: true, // Can't be accessed by JavaScript
-      secure: process.env.NODE_ENV === "production", // Only send over HTTPS in production
-      sameSite: "Strict", // Mitigate CSRF
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // ✅ Only in production
+      sameSite: "Lax", // ✅ Use "Lax" for localhost
       maxAge: 3600000, // 1 hour
     });
+    
 
     res.status(200).json({
       id: user._id,
@@ -92,11 +93,12 @@ exports.loginUser = async (req, res) => {
 
     // Set token in HttpOnly cookie
     res.cookie("token", token, {
-      httpOnly: true, // Can't be accessed by JavaScript
-      secure: process.env.NODE_ENV === "production", // Only send over HTTPS in production
-      sameSite: "Strict", // Mitigate CSRF
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // ✅ Only in production
+      sameSite: "Lax", // ✅ Use "Lax" for localhost
       maxAge: 3600000, // 1 hour
     });
+    
 
     res.status(200).json({
       id: user._id,
