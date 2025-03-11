@@ -20,7 +20,7 @@ app.listen(PORT, () => {
 // to remove cross origin access error
 app.use(
   cors({
-    origin: "http://localhost:5173", // ✅ Change to your frontend URL
+    origin: ["http://localhost:5173","http://localhost:3000"], // ✅ Change to your frontend URL
     credentials: true, // ✅ This is required to send cookies
   })
 );

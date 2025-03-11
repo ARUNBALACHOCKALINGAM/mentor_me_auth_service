@@ -161,3 +161,40 @@ exports.likeUser = async (req, res) => {
     res.status(500).json({ message: "Error while sending like", error: error.message });
   }
 };
+
+
+// Fetch user details by userId
+exports.fetchUser = async (req, res) => {
+  try {
+    const { userId } = req.params; // Get userId from route parameters
+    
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    // Fetch the user details and exclude password
+    const userDetails = await User.findById(userId, { password: 0 });
+
+    if (!userDetails) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Transform the data (optional)
+    const transformedUser = {
+      ...userDetails.toObject(),
+      socialMedia: [
+        { name: "LinkedIn", url: userDetails.linkedin || "#" },
+        { name: "Github", url: userDetails.github || "#" },
+        { name: "Leetcode", url: userDetails.leetcode || "#" },
+        { name: "CodeChef", url: userDetails.codechef || "#" },
+        { name: "Portfolio", url: userDetails.portfolio || "#" },
+      ],
+    };
+    
+    res.status(200).json(transformedUser);
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    res.status(500).json({ message: "Error fetching user details", error: error.message });
+  }
+};
